@@ -1,15 +1,14 @@
-extern crate rand;
 use rand::Rng;
-use population::*;
-use tour::*;
-use city::*;
+use crate::population::*;
+use crate::tour::*;
+use crate::city::*;
 
 pub struct GA;
 
 const MUTATION_RATE: f32 = 0.015;
 
 impl GA {
-    pub fn evolve_population(rng: &mut rand::ThreadRng, pop: Population) -> Population {
+    pub fn evolve_population(rng: &mut rand::rngs::ThreadRng, pop: Population) -> Population {
         let mut new_population = Population::new();
         let mut tours = Vec::new();
 
@@ -39,12 +38,12 @@ impl GA {
         new_population
     }
 
-    fn crossover(rng: &mut rand::ThreadRng, parent1: &Tour, parent2: &Tour) -> Tour {
+    fn crossover(rng: &mut rand::rngs::ThreadRng, parent1: &Tour, parent2: &Tour) -> Tour {
         let mut child: Tour = Tour::new();
 
         // Get start and end sub tour positions for parent1's tour
-        let start_pos: usize = rng.gen_range(0, CITY_COUNT);
-        let end_pos: usize = rng.gen_range(0, CITY_COUNT);
+        let start_pos: usize = rng.gen_range(0..CITY_COUNT);
+        let end_pos: usize = rng.gen_range(0..CITY_COUNT);
 
         // Loop and add the sub tour from parent1 to our child
         for i in 0..CITY_COUNT {
@@ -78,7 +77,7 @@ impl GA {
         child
     }
 
-    fn mutate(rng: &mut rand::ThreadRng, tour: &mut Tour) {
+    fn mutate(rng: &mut rand::rngs::ThreadRng, tour: &mut Tour) {
         // Loop through tour cities
         for tour_pos1 in 0..CITY_COUNT {
             // Apply mutation rate

@@ -1,6 +1,5 @@
-extern crate rand;
-use tour::*;
-use city::*;
+use crate::tour::*;
+use crate::city::*;
 
 pub struct Population {
     tours: Vec<Tour>,
@@ -17,7 +16,7 @@ impl Population {
         }
     }
 
-    pub fn initialize_from_cities(&mut self, rng: &mut rand::ThreadRng, city_list: &Vec<City>) {
+    pub fn initialize_from_cities(&mut self, rng: &mut rand::rngs::ThreadRng, city_list: &Vec<City>) {
         assert_eq!(self.tours.len(), 0);
         for _ in 0..POP_COUNT {
             let mut new_tour = Tour::new();

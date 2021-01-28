@@ -1,14 +1,11 @@
-extern crate rand;
-extern crate num;
-
 mod city;
 mod tour;
 mod population;
 mod ga;
 
-use city::*;
-use population::*;
-use ga::*;
+use crate::city::*;
+use crate::population::*;
+use crate::ga::*;
 
 fn main() {
 

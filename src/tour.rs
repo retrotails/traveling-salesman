@@ -1,8 +1,5 @@
-extern crate rand;
-extern crate num;
-use num::*;
 use rand::Rng;
-use city::*;
+use crate::city::*;
 
 pub struct Tour {
     tour: [City; CITY_COUNT],
@@ -23,7 +20,7 @@ impl Tour {
         }
     }
 
-    pub fn generate_individual(&mut self, rng: &mut rand::ThreadRng, city_list: &Vec<City>) {
+    pub fn generate_individual(&mut self, rng: &mut rand::rngs::ThreadRng, city_list: &Vec<City>) {
         assert_eq!(city_list.len(), CITY_COUNT);
 
         // copy cities in original sequence
@@ -33,7 +30,7 @@ impl Tour {
         // shuffle to create new sequence
         for _ in 0..100 {
             for j in 0..CITY_COUNT {
-                let random_index: i32 = rng.gen_range(0, CITY_COUNT as i32);
+                let random_index: i32 = rng.gen_range(0..CITY_COUNT as i32);
                 if random_index != j as i32
                 {
                     // swap the city at j with the city at random_index:
@@ -79,11 +76,11 @@ impl Tour {
     }
 
     fn distance_to(&self, from_city: City, to_city: City) -> f32 {
-        let x_distance: i32 = num::abs(from_city.x - to_city.x);
-        let y_distance: i32 = num::abs(from_city.y - to_city.y);
+        let x_distance: i32 = i32::abs(from_city.x - to_city.x);
+        let y_distance: i32 = i32::abs(from_city.y - to_city.y);
         // use Pythagorean theorem to calculate distance:
         let sums_squared: i32 = (x_distance * x_distance) + (y_distance * y_distance);
-        let distance: f32 = num::Float::sqrt(sums_squared as f32);
+        let distance: f32 = f32::sqrt(sums_squared as f32);
         distance
     }
 
